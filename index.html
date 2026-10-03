@@ -195,6 +195,10 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 table.pick th:nth-child(2),table.pick td:nth-child(2){border-left:2px solid var(--block);border-right:2px solid var(--block)}
 table.pick thead th:nth-child(2){border-top:2px solid var(--block);color:var(--block);font-weight:700}
 table.pick tbody tr:last-child td:nth-child(2){border-bottom:2px solid var(--block)}
+.st{display:inline-grid;justify-items:center;gap:1px;line-height:1.3}
+.st b{font-weight:500}
+.st small{font-family:var(--f-body);font-size:11px;color:var(--muted)}
+.st.h small,.st.end small{color:inherit;opacity:.85}
 /* calc */
 .calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
 .calc label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
@@ -507,19 +511,9 @@ a:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
   <h3 style="margin-top:14px">상태 머신: 모든 인플루언서는 하나의 상태만 가집니다</h3>
   <p class="prose muted" style="font-size:14px">지금 시트의 "다음 액션(자동계산)" 수식이 하던 일을 코드로 옮긴 것입니다. 상태가 바뀔 때마다 누가, 언제, 어떤 근거로 바꿨는지 기록됩니다. 같은 사람에게 DM이 두 번 나가거나 제품이 두 번 출고되는 일을 구조적으로 막습니다.</p>
   <div class="states">
-    <span class="st">DISCOVERED</span><span class="st-arr">→</span>
-    <span class="st">SCORED</span><span class="st-arr">→</span>
-    <span class="st h">APPROVED ①</span><span class="st-arr">→</span>
-    <span class="st h">CONTACTED ②</span><span class="st-arr">→</span>
-    <span class="st">REPLIED</span><span class="st-arr">→</span>
-    <span class="st">ACCEPTED</span><span class="st-arr">→</span>
-    <span class="st">ADDRESS_COLLECTED</span><span class="st-arr">→</span>
-    <span class="st h">SHIPPED ④</span><span class="st-arr">→</span>
-    <span class="st">DELIVERED</span><span class="st-arr">→</span>
-    <span class="st">UPLOADED</span><span class="st-arr">→</span>
-    <span class="st end">ATTRIBUTED</span>
+    <span class="st"><b>DISCOVERED</b><small>후보 발견</small></span><span class="st-arr">→</span><span class="st"><b>SCORED</b><small>AI 점수화</small></span><span class="st-arr">→</span><span class="st h"><b>APPROVED ①</b><small>승인</small></span><span class="st-arr">→</span><span class="st h"><b>CONTACTED ②</b><small>첫 DM 발송</small></span><span class="st-arr">→</span><span class="st"><b>REPLIED</b><small>회신 받음</small></span><span class="st-arr">→</span><span class="st"><b>ACCEPTED</b><small>수락</small></span><span class="st-arr">→</span><span class="st"><b>ADDRESS_COLLECTED</b><small>배송지 확보</small></span><span class="st-arr">→</span><span class="st h"><b>SHIPPED ④</b><small>제품 발송</small></span><span class="st-arr">→</span><span class="st"><b>DELIVERED</b><small>배송 완료</small></span><span class="st-arr">→</span><span class="st"><b>UPLOADED</b><small>콘텐츠 업로드</small></span><span class="st-arr">→</span><span class="st end"><b>ATTRIBUTED</b><small>매출 연결</small></span>
     <span class="st-arr">　·　분기:</span>
-    <span class="st">REJECTED</span><span class="st">NO_REPLY → REMIND</span><span class="st">SUPPRESSED</span>
+    <span class="st"><b>REJECTED</b><small>거절</small></span><span class="st"><b>NO_REPLY → REMIND</b><small>무응답 → 리마인드</small></span><span class="st"><b>SUPPRESSED</b><small>재연락 제외</small></span>
   </div>
 </section>
 
