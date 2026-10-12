@@ -117,16 +117,18 @@ h2 em.w{color:var(--warn)}
 .wnode span{font-size:17px;color:var(--mute)}
 .wcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:250px;height:250px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;text-align:center;font-size:28px;font-weight:800;line-height:1.35}
 
-/* waterfall */
-.wf{position:relative;width:1300px;height:520px}
-.wf .base{position:absolute;left:0;right:0;bottom:60px;border-top:3px solid var(--ink)}
-.wf .b{position:absolute;width:150px;border-radius:8px}
-.wf .b.p{background:var(--acc)}
-.wf .b.n{background:var(--warn)}
-.wf .b.t{background:var(--ink)}
-.wf .v{position:absolute;width:150px;text-align:center;font-size:30px;font-weight:800}
-.wf .l{position:absolute;width:190px;text-align:center;font-size:19px;color:var(--ink2);font-weight:600;line-height:1.3;bottom:0}
-
+/* value bars */
+.hb{width:1240px;display:flex;flex-direction:column;gap:16px}
+.hb .row{display:grid;grid-template-columns:260px 1fr 150px;align-items:center;gap:24px}
+.hb .lab{font-size:24px;font-weight:600;color:var(--ink2);text-align:right}
+.hb .track{height:46px;position:relative}
+.hb .fill{height:100%;border-radius:0 10px 10px 0}
+.hb .fill.p{background:var(--acc)}
+.hb .fill.n{background:var(--warn)}
+.hb .fill.t{background:var(--ink)}
+.hb .val{font-size:30px;font-weight:800}
+.hb .row.total{border-top:3px solid var(--ink);padding-top:18px;margin-top:6px}
+.hb .row.total .lab{color:var(--ink);font-weight:800}
 /* compare (step slides) */
 .cmp{display:grid;grid-template-columns:1fr 90px 1fr;width:100%;align-items:stretch}
 .side{border-radius:26px;padding:36px 38px;display:flex;flex-direction:column;gap:20px}
@@ -447,7 +449,7 @@ h2 em.w{color:var(--warn)}
   <div class="kicker"><span class="n"><b>2</b></span>한 달 기준 가치</div>
   <h2>매달 약 <em>859만 원</em>의 효과</h2>
   <div class="body">
-    <div class="wf" id="wf"></div>
+    <div class="hb" id="wf"></div>
   </div>
   <p class="note">가정: 월 500건 연락, 업로드율 20%, 게시물 1건 가치 7만 원, 광고 소재 월 5건 × 20만 원, 대표님 시간 1시간당 3만 원. 운영비는 피처링·X API·AI·서버·배송추적 합계</p>
 </section>
@@ -718,19 +720,15 @@ h2 em.w{color:var(--warn)}
   for(var i=0;i<100;i++)h+='<i'+(i<16?' class="on"':'')+'></i>';
   d.innerHTML=h;
 
-  // waterfall
+  // value bars (all start at zero)
   var items=[['알바 연락비 절감',75,'p'],['대표님 시간 절감',207,'p'],['늘어난 게시물 가치',544,'p'],['광고 소재 가치',100,'p'],['운영비',-67,'n'],['월 순효과',859,'t']];
-  var wf=document.getElementById('wf'),H=430,base=60,sc=H/950,x=20,cum=0,out='<div class="base"></div>';
+  var out='';
   items.forEach(function(it){
-    var lo,hi;
-    if(it[2]==='t'){lo=0;hi=it[1];}else{lo=Math.min(cum,cum+it[1]);hi=Math.max(cum,cum+it[1]);cum+=it[1];}
-    var bot=base+lo*sc,ht=(hi-lo)*sc;
-    out+='<div class="b '+it[2]+'" style="left:'+x+'px;bottom:'+bot+'px;height:'+ht+'px"></div>';
-    out+='<div class="v" style="left:'+x+'px;bottom:'+(bot+ht+8)+'px;color:'+(it[2]==='n'?'var(--warn)':(it[2]==='t'?'var(--ink)':'var(--acc)'))+'">'+(it[1]>0&&it[2]!=='t'?'+':'')+it[1]+'만</div>';
-    out+='<div class="l" style="left:'+(x-20)+'px">'+it[0]+'</div>';
-    x+=210;
+    var w=Math.abs(it[1])/859*100;
+    var c=it[2]==='n'?'var(--warn)':(it[2]==='t'?'var(--ink)':'var(--acc)');
+    out+='<div class="row'+(it[2]==='t'?' total':'')+'"><span class="lab">'+it[0]+'</span><div class="track"><div class="fill '+it[2]+'" style="width:'+w+'%"></div></div><span class="val" style="color:'+c+'">'+(it[1]>0&&it[2]!=='t'?'+':'')+(it[1]<0?'−'+(-it[1]):it[1])+'만 원</span></div>';
   });
-  wf.innerHTML=out;
+  document.getElementById('wf').innerHTML=out;
 
   // payback chart
   var svg=document.getElementById('pay'),W=960,Hh=470,L=90,R=30,T=20,B=60;
