@@ -15,10 +15,10 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:#1B1D22;overflow:hidden}
+html,body{margin:0;height:100%;background:#fff;overflow:hidden}
 body{font-family:var(--font);color:var(--ink);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
-.viewport{position:fixed;inset:0;display:grid;place-items:center}
-.deck{width:1600px;height:900px;position:relative;transform-origin:center center}
+.viewport{position:fixed;inset:0;background:#fff}
+.deck{width:1600px;height:900px;position:absolute;left:50%;top:50%;transform-origin:center center}
 .slide{position:absolute;inset:0;background:#fff;padding:84px 104px 72px;display:none;flex-direction:column;overflow:hidden}
 .slide.on{display:flex}
 .kicker{font-size:22px;font-weight:700;color:var(--acc);letter-spacing:.02em;margin-bottom:14px;display:flex;gap:12px;align-items:center}
@@ -37,13 +37,13 @@ h2 em.w{color:var(--warn)}
 .ic.xl{width:60px;height:60px;stroke-width:1.6}
 
 /* cover */
-.cover{background:var(--ink);color:#fff;justify-content:space-between}
-.cover .brand{font-size:22px;letter-spacing:.2em;color:#9FD8C3;font-weight:700}
+.cover{background:#fff;color:var(--ink);justify-content:space-between}
+.cover .brand{font-size:22px;letter-spacing:.2em;color:var(--acc);font-weight:700}
 .cover h1{font-size:84px;line-height:1.2;margin:0;font-weight:800;letter-spacing:-.03em}
-.cover h1 em{font-style:normal;color:#7FD3B4}
-.cover p{font-size:28px;color:#C9CDD5;margin:26px 0 0;line-height:1.5}
-.cover .meta{display:flex;justify-content:space-between;font-size:20px;color:#9AA0AB}
-.divider{background:var(--soft)}
+.cover h1 em{font-style:normal;color:var(--acc)}
+.cover p{font-size:28px;color:var(--ink2);margin:26px 0 0;line-height:1.5}
+.cover .meta{display:flex;justify-content:space-between;font-size:20px;color:var(--mute)}
+.divider{background:#fff}
 .divider .big{font-size:150px;font-weight:800;color:var(--acc);line-height:1}
 .divider h2{font-size:64px;margin-top:22px}
 
@@ -192,7 +192,7 @@ h2 em.w{color:var(--warn)}
 @media print{
   html,body{overflow:visible;background:#fff}
   .viewport{position:static;display:block}
-  .deck{transform:none!important}
+  .deck{transform:none!important;position:static}
   .slide{display:flex!important;position:relative;page-break-after:always;break-after:page}
   .nav,.prog{display:none}
   @page{size:1600px 900px;margin:0}
@@ -754,7 +754,7 @@ h2 em.w{color:var(--warn)}
 
   // navigation
   var deck=document.getElementById('deck'),slides=[].slice.call(document.querySelectorAll('.slide')),cur=0;
-  function fit(){var k=Math.min(window.innerWidth/1600,window.innerHeight/900);deck.style.transform='scale('+k+')';}
+  function fit(){var k=Math.min(window.innerWidth/1600,window.innerHeight/900);deck.style.transform='translate(-50%,-50%) scale('+k+')';}
   function go(n){
     cur=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach(function(s,i){s.classList.toggle('on',i===cur)});
